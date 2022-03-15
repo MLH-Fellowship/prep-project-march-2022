@@ -7,6 +7,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
+  const API_KEY = "a820e5fdf15f911ab6a6c37ff8d728b8"
 
   useEffect(() => {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
@@ -16,7 +17,7 @@ function App() {
           if (result['cod'] !== 200) {
             setIsLoaded(false)
           } else {
-            setIsLoaded(true);
+            setIsLoaded(true);  
             setResults(result);
           }
         },
