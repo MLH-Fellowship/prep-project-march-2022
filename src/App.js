@@ -8,10 +8,9 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
-  const API_KEY = "a820e5fdf15f911ab6a6c37ff8d728b8"
-
+  
   useEffect(() => {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + API_KEY)
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
       .then(res => res.json())
       .then(
         (result) => {
@@ -29,17 +28,33 @@ function App() {
       )
   }, [city])
 
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
     return <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div className='container'>
-        <h2>Enter a city below 👇</h2>
-        <input
-          type="text"
-          value={city}
-          onChange={event => setCity(event.target.value)} />
+        <div className="input">
+          <h2>Enter a city below 👇</h2>
+          <input
+            type="text"
+            value={city}
+            onChange={event => setCity(event.target.value)} />
+        </div>
+        <div id='map'>
+          {isLoaded && results && <>
+            <Map
+            lat = {results.coord.lat}
+            lon = {results.coord.lon}
+            city={city}
+            googleMapURL= {`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLEAPIKEY}&v=3.exp&libraries=geometry,drawing,places`}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px`}} />}
+            mapElement={<div className={`map-google`} style={{ height: `100%`}} />}/>
+          </>}
+        </div>
+      </div>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
           {console.log(results)}
@@ -49,15 +64,6 @@ function App() {
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
         </div>
-        <div id='map'>
-          <Map
-          city={city}
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqCsBgH2aenY3r96l7R6iYwd7Bg2X13us&v=3.exp&libraries=geometry,drawing,places"
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px`}} />}
-          mapElement={<div className={`map-google`} style={{ height: `100%`}} />}/>
-        </div>
-      </div>
     </>
   }
 }
