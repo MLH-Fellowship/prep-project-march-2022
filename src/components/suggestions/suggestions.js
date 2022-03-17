@@ -1,26 +1,23 @@
 import React from 'react';
 import Slider from 'react-slick';
 import SuggestionCard from './suggestionCard.js';
+import data from './data';
 
 import './suggestions.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-// import { useState } from 'react/cjs/react.production.min';
 
 
 function Suggestions(props){
-    // const [weat, setWeat] = useState('');
-    const suggest = {
-        "thunderstorm": ["raincoat" ],
-        "drizzle": ["raincoat"],
-        "rain": ["umbrella"],
-        "snow": ["snowboots"],
-        "mist": ["umbrella"],
-        "clear": ["sunglasses"],
-        "clouds": ["umbrella"]
+    // fetching the items related to the weather condition
+    let items = data[props.weather.toLowerCase()];
+
+    // error handling if data doesn't exist
+    if(!items){
+        items = [];
     }
-    const weat = props.weather.toLowerCase();
-    console.log(suggest[weat]);
+
+    // carousel settings
     const settings = {
         dots: true,
         infinite: true,
@@ -34,8 +31,9 @@ function Suggestions(props){
             <h2>What to bring ?</h2>
             <div className="slider-wrapper">
                 <Slider {...settings}>
-                    <SuggestionCard/>
-                    <SuggestionCard/>
+                    {items.map((item, idx)=>
+                        <SuggestionCard key = {idx} item = {item}/>
+                    )}
                 </Slider>
             </div>
         </div>

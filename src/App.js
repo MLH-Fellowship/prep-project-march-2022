@@ -50,7 +50,7 @@ function App() {
             
           }
         </div>
-        {isLoaded&&results&&
+        {isLoaded && results &&
         <Suggestions
           weather={results.weather[0].main}
         />
