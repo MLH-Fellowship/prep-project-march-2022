@@ -24,6 +24,7 @@ function Suggestions(props){
         speed: 500,
         slidesToShow: 1,
         swipeToSlide: true,
+        autoplay: true
       };
 
     return(
