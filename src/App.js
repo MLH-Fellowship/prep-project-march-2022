@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import Map from './components/Map'
 
 function App() {
   const [error, setError] = useState(null);
@@ -10,7 +11,7 @@ function App() {
   const API_KEY = "a820e5fdf15f911ab6a6c37ff8d728b8"
 
   useEffect(() => {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + API_KEY)
       .then(res => res.json())
       .then(
         (result) => {
@@ -33,7 +34,7 @@ function App() {
   } else {
     return <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-      <div>
+      <div className='container'>
         <h2>Enter a city below 👇</h2>
         <input
           type="text"
@@ -47,6 +48,14 @@ function App() {
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
+        </div>
+        <div id='map'>
+          <Map
+          city={city}
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqCsBgH2aenY3r96l7R6iYwd7Bg2X13us&v=3.exp&libraries=geometry,drawing,places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px`}} />}
+          mapElement={<div className={`map-google`} style={{ height: `100%`}} />}/>
         </div>
       </div>
     </>
