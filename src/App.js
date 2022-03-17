@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import Suggestion from "./components/Suggestion";
 
 function App() {
   const [error, setError] = useState(null);
@@ -24,9 +25,8 @@ function App() {
           setIsLoaded(true);
           setError(error);
         }
-      )
+        )
   }, [city])
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -45,8 +45,12 @@ function App() {
             <h3>{results.weather[0].main}</h3>
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
+            <Suggestion
+              weather={results.weather[0].main}
+            />
           </>}
         </div>
+        
       </div>
     </>
   }
