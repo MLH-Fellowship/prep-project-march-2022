@@ -51,52 +51,27 @@ const HourlyForecast = (results) => {
 
 }, []);
 
+const days = { 0 : 'Sun', 1 : 'Mon', 2 : 'Tue', 3 : 'Wed', 4 : 'Thu', 5 : 'Fri', 6 : 'Sat' };
+const keys = Object.values(days);
+
+
   return (
     <div>
       <div className="component">
         <Carousel responsive={responsive}>
-          <CardContent>
+
+        {
+          keys.map((item, index) => (
+            <CardContent>
             <Typography variant="h5" component="div">
-              9 : 00 Am
+            9 : 00 Am
             </Typography>
-            <Typography color="text.secondary">Monday</Typography>
+            <Typography color="text.secondary">{keys[index]}</Typography>
             <Typography variant="h4">25° C</Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              9 : 00 Am
-            </Typography>
-            <Typography color="text.secondary">Monday</Typography>
-            <Typography variant="h4">25° C</Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              9 : 00 Am
-            </Typography>
-            <Typography color="text.secondary">Monday</Typography>
-            <Typography variant="h4">25° C</Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              9 : 00 Am
-            </Typography>
-            <Typography color="text.secondary">Monday</Typography>
-            <Typography variant="h4">25° C</Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              9 : 00 Am
-            </Typography>
-            <Typography color="text.secondary">Monday</Typography>
-            <Typography variant="h4">25° C</Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              9 : 00 Am
-            </Typography>
-            <Typography color="text.secondary">Monday</Typography>
-            <Typography variant="h4">25° C</Typography>
-          </CardContent>
+            </CardContent>
+        ))
+        }
+
         </Carousel>
       </div>
     </div>
