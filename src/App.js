@@ -7,17 +7,56 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
+  const [fooditems, setFooditems] =useState(null);
+  
+
+
+	const	change = (response) =>{
+	let endpoint="https://api.spoonacular.com/recipes/complexSearch/?apiKey="+process.env.REACT_APP_FOODAPIKEY;
+	if(response.weather[0].main==='Rain')
+		{
+			endpoint=endpoint+"&query=noodle,soup";
+		}
+		else if(response.weather[0].main==='Snow' || response.main.feels_like<10)
+		{
+			endpoint=endpoint+"&type=soup";
+		}
+		else
+		{
+			endpoint=endpoint+"&type=beverage&number=5";
+		}
+		fetch(endpoint)
+      		.then(res => res.json())
+      		.then(
+		    (food) => {
+			  	if (food!=null && food['totalResults'] > 0) {
+					setFooditems(food['results']);
+					console.log(food['results']);
+		 		} 
+				else {
+				 	console.log('No results found');
+	  			}
+        	},
+        	(error) => {
+           		console.log('Error');
+        	}
+      )
+	}
+		
 
   useEffect(() => {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
       .then(res => res.json())
       .then(
+      
         (result) => {
           if (result['cod'] !== 200) {
             setIsLoaded(false)
           } else {
             setIsLoaded(true);
             setResults(result);
+            change(result);
+         
           }
         },
         (error) => {
@@ -50,6 +89,8 @@ function App() {
       </div>
     </>
   }
+  
+  
 }
 
 export default App;
