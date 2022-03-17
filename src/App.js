@@ -8,8 +8,38 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City");
   const [results, setResults] = useState(null);
-  const [foodResult, setFoodResult] = useState(null);
-  const [isFoodLoaded, setIsFoodLoaded] = useState(false);
+  const [fooditems, setFooditems] = useState(null);
+
+  const change = (response) => {
+    let endpoint =
+      "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +
+      process.env.REACT_APP_FOODAPIKEY;
+    if (response.weather[0].main === "Rain") {
+      endpoint = endpoint + "&query=noodle,soup";
+    } else if (
+      response.weather[0].main === "Snow" ||
+      response.main.feels_like < 10
+    ) {
+      endpoint = endpoint + "&type=soup";
+    } else {
+      endpoint = endpoint + "&type=beverage&number=5";
+    }
+    fetch(endpoint)
+      .then((res) => res.json())
+      .then(
+        (food) => {
+          if (food != null && food["totalResults"] > 0) {
+            setFooditems(food["results"]);
+            console.log(food["results"]);
+          } else {
+            console.log("No results found");
+          }
+        },
+        (error) => {
+          console.log("Error");
+        }
+      );
+  };
 
   useEffect(() => {
     fetch(
@@ -27,6 +57,7 @@ function App() {
           } else {
             setIsLoaded(true);
             setResults(result);
+            change(result);
           }
         },
         (error) => {
@@ -34,18 +65,6 @@ function App() {
           setError(error);
         }
       );
-  }, [city]);
-
-  const getFoods = async () => {
-    const response = await fetch(
-      "https://api.spoonacular.com/recipes/complexSearch?apiKey=5f77f93cb8fc4173ace74f8a012bfed3&cuisine=African"
-    );
-    const data = await response.json();
-    setFoodResult(data.results);
-    console.log(data.results);
-  };
-  useEffect(() => {
-    getFoods();
   }, [city]);
 
   if (error) {
@@ -78,7 +97,7 @@ function App() {
           </div>
         </div>
         <div className="food-recommendations">
-          {foodResult.map((item) => {
+          {fooditems.map((item) => {
             return (
               <FoodItem key={item.id} name={item.title} image={item.image} />
             );
