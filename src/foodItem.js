@@ -4,6 +4,7 @@ export default function FoodItem(props) {
   return (
     <div className="food-item-container">
       <h3>{props.name}</h3>
+
       <img
         className="food-item-img"
         src={props.image}
