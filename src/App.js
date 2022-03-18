@@ -42,7 +42,6 @@ function App() {
           onChange={event => setCity(event.target.value)} />
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-          {console.log(results)}
           {isLoaded && results && <>
             <h3>{results.weather[0].main}</h3>
             <p>Feels like {results.main.feels_like}°C</p>
@@ -51,7 +50,6 @@ function App() {
         </div>
       </div>
       <div>
-      {console.log(results)}
             {isLoaded && results && <>
             <SongRecommendation options={results} />
             </>}
