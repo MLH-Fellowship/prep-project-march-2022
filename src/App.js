@@ -70,21 +70,31 @@ const { REACT_APP_APIKEY } = process.env;
 //   }
 // }
 function App() {
-
   const [error, setError] = useState(null);
   const [city, setCity] = useState("New York City");
+  const [latitude, setLatitude] = useState("35");
+  const [longitude, setLongitude] = useState("139");
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const url = "https://api.openweathermap.org/data/2.5/weather?q=";
- 
 
-  const fetchWeatherData = () => {
+  const fetchLocation = async (location) => {
+    axios
+      .get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${REACT_APP_APIKEY}`
+      )
+      .then((res) => {
+        setLatitude(res.data[0].lat);
+        setLongitude(res.data[0].lon);
+      });
+  };
+  const fetchWeatherData = async () => {
     axios
       // .get(`${url}` + "tokyo" + "&units=metric" + `&appid=${REACT_APP_APIKEY}`)
       .get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=${REACT_APP_APIKEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${REACT_APP_APIKEY}`
       )
       .then((res) => {
         const allData = res.data;
@@ -95,13 +105,12 @@ function App() {
         console.log(err.toJSON());
       });
   };
-
   useEffect(async () => {
     try {
-
       // set loading to true before calling API
       setLoading(true);
       const results = await fetchWeatherData();
+      // fetchLocation();
       setResults(results);
       // switch loading to false after fetch is complete
       setLoading(false);
@@ -113,29 +122,33 @@ function App() {
   }, [city]);
   if (error) {
     return <div>Error: {error.message}</div>;
-  } 
+  }
 
-  if(loading) return (
-    <span>Loading</span>
-  );
+  if (loading) return <span>Loading</span>;
 
   // data will be null when fetch call fails
-  if (!results) return (
-    <span>Data not available</span>
-  );
+  if (!results) return <span>Data not available</span>;
   return (
     <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
         <input
+          className="city-input"
           type="text"
           value={city}
           onChange={(event) => setCity(event.target.value)}
         />
+        <button
+          onClick={() => {
+            fetchLocation(city);
+            fetchWeatherData();
+          }}
+        >
+          Click Me
+        </button>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-          {console.log(results)}
           {isLoaded && results && (
             <>
               <h3>{results.weather[0].main}</h3>
@@ -149,8 +162,6 @@ function App() {
           )}
         </div>
       </div>
-    
-
       <Result results={results} />;
     </>
   );

@@ -1,37 +1,51 @@
 import { useEffect, useState } from "react";
-import { Line } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
+import { Line } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const Result = (results) => {
+  // console.log(results.results.list);
+  const tempertureDataPoints = results.results.list.map((index) => {
+    return index.main.temp - 273.15;
+  });
+  // console.log(results.results.list);
+  const timeLabels = results.results.list.map((index) => {
+    let date = new Date(index.dt * 1000);
+    let day = date.toLocaleDateString(undefined, {
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
 
-  const tempertureDataPoints = results.results.list.map(function(index) {
-    return index.main.temp-273.15
-    
-  })
-
-  const timeLabels = results.results.list.map(function(index) {
-    var date = new Date(index.dt*1000);
-    var day = date.toLocaleDateString("en-US") 
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var formattedTime = day + " " + hours + ':' + minutes.substr(-2)
-    return formattedTime
-  })
-
-  return <div>
+    return day;
+  });
+  const style = {
+    backgroundColor: "white",
+    margin: "2%",
+  };
+  return (
+    <div>
       <Line
-        style={{backgroundColor: "white", margin: "2%"}}
-        datasetIdKey='id'
+        style={style}
+        datasetIdKey="id"
         data={{
           labels: timeLabels,
-          datasets:[{
-            label: "Temperature in Celcius",
-            data: tempertureDataPoints
-          }]
+          datasets: [
+            {
+              label: "Temperature in Celcius",
+              data: tempertureDataPoints,
+              fill: true,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              pointRadius: 0,
+              tension: 0.4,
+            },
+          ],
         }}
       />
     </div>
-  }
+  );
+};
 
 export default Result;
