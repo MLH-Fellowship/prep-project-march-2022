@@ -37,6 +37,11 @@ width: fit-content;
   input {
     width: 75%;
   }
+
+  .Results {
+    padding: 5% 15%;
+    width: 60%
+  }
 }
 
 /* For Tablets */
