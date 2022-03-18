@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import FoodItem from "./foodItem";
+import FoodCarousel from "./FoodCarousel";
 
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City");
   const [results, setResults] = useState(null);
-  
 
   const [fooditems, setFooditems] = useState(null);
 
   const change = (response) => {
     let endpoint =
-      "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +process.env.REACT_APP_FOODAPIKEY;
+      "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +
+      process.env.REACT_APP_FOODAPIKEY;
     if (response.weather[0].main === "Rain") {
       endpoint = endpoint + "&query=noodle,soup";
     } else if (
@@ -26,14 +27,14 @@ function App() {
       endpoint = endpoint + "&type=beverage&number=5";
     }
 
-    fetch(endpoint+"&addRecipeInformation=true")
+    fetch(endpoint + "&addRecipeInformation=true")
       .then((res) => res.json())
       .then(
         (food) => {
           if (food != null && food["totalResults"] > 0) {
             setFooditems(food["results"]);
             console.log(food["results"]);
-            console.log(endpoint+"&addRecipeinformation=true");
+            console.log(endpoint + "&addRecipeinformation=true");
           } else {
             console.log("No results found");
           }
@@ -43,7 +44,6 @@ function App() {
         }
       );
   };
-
 
   useEffect(() => {
     fetch(
@@ -55,7 +55,6 @@ function App() {
     )
       .then((res) => res.json())
       .then(
-      
         (result) => {
           if (result["cod"] !== 200) {
             setIsLoaded(false);
@@ -103,18 +102,14 @@ function App() {
           </div>
         </div>
         <div className="food-recommendations">
-        {fooditems && (fooditems.map((item) => {
-            return (
-              <FoodItem key={item.id} name={item.title} image={item.image} url={item.sourceUrl} />
-            );
-          }))}
-          
+          <h2 className="food-recommendations-title">
+            Hungry? Here's some food you may like 😋
+          </h2>
+          {fooditems && <FoodCarousel items={fooditems} />}
         </div>
       </>
     );
   }
-  
-  
 }
 
 export default App;
