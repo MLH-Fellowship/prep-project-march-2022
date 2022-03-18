@@ -33,6 +33,7 @@ console.log(lat)
 console.log(lon)
 console.log(city)
   const [data, setData] = useState(results);
+  const [time, setTime] = useState(0);
   console.log(data)
   // let lat = 0
   // let lon = 0
@@ -53,16 +54,17 @@ console.log(city)
             (result) => {
                 if (result.cod !== "200") {
                   //  console.log(result);
-                   setData(result.hourly[8].feels_like);
+                  setData(result);
                   //  console.log(data);
                   console.log("😴😴")
                    console.log("😍 = " + result.hourly[0].feels_like);
-                  //  console.log("😍 = " + result.hourly[0].weather[0].icon);
+                   console.log("😅🌟 = " + result.hourly[0].weather[0].icon);
                    const dt = result.hourly[0].dt;
                    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
                    var day = new Date(dt*1000);
                    console.log(day.getUTCHours() + " UTC")
                    console.log(days[day.getDay()])
+                   setTime(day.getUTCHours() + " UTC")
                 } else {
                    console.log("Something is worng Error");
               
@@ -86,10 +88,11 @@ console.log(data);
           keys.map((item, index) => (
             <CardContent>
             <Typography variant="h5" component="div">
-            9 : 00 Am
+            {new Date(data==null?0:(data.hourly[index].dt)*1000).getUTCHours() + " UTC"}
             </Typography>
-            <Typography color="text.secondary">{keys[index]}</Typography>
-            <Typography variant="h4">{data}</Typography>
+            <Typography color="text.secondary">{keys[new Date(data==null?0:(data.hourly[index].dt)*1000).getDay()]}</Typography>
+            <Typography variant="h4">{data==null?0:(data.hourly[index].feels_like).toFixed(2)}° K</Typography>
+            <Typography variant="h4">{data==null?0:(data.hourly[index].weather[0].icon)+".png"}</Typography>
             </CardContent>
         ))
         }
