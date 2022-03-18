@@ -30,18 +30,3 @@ padding: 10px;
 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.suggestionContainer {
-width: 200px;
-/* display: block; */
-color: black;
-background-color: white;
-/* align-items: center; */
-/* font-size: 1rem; */
-/* font-weight: bold; */
-color: black;
-text-align: center;
-justify-content: center;
-/* margin-left: 50%;
-margin-right: 50%; */
-}
-
