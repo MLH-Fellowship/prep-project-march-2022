@@ -137,7 +137,7 @@ function App() {
           className="city-input"
           type="text"
           value={city}
-          onChange={(event) => setCity(event.target.value)}
+          onKeyDown={(event) => setCity(event.target.value)}
         />
         <button
           onClick={() => {
