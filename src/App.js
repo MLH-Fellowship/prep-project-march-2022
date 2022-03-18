@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
 function App() {
   const [error, setError] = useState(null);
@@ -34,6 +35,7 @@ function App() {
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
+        
         <input
           type="text"
           value={city}
@@ -48,6 +50,12 @@ function App() {
           </>}
         </div>
       </div>
+      <div>
+      {console.log(results)}
+            {isLoaded && results && <>
+            <SongRecommendation options={results} />
+            </>}
+        </div>
     </>
   }
 }
