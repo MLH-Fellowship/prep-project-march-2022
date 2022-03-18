@@ -10,7 +10,8 @@ const SongRecommendation = (props) => {
     let accessToken = '';
     let playlistId = '';
 
-    //using the options object to indentify different weather conditions
+    //using the options object to identify different weather conditions
+    // setting the playlistId to playlists according to weather conditions
     playlistId = {
         Clear: "6rItp4lFXGnZaNHH0MJ5Lv",
         Clouds: "6UrqFNXNVgz9WQkXmBGmgc",
@@ -19,24 +20,25 @@ const SongRecommendation = (props) => {
         Haze: "37i9dQZF1DWSEHf1f0boX3",
         Drizzle: "6nqK56jVkohLUhlAcxkrnV",
     }[props.options.weather[0].main] || '7LqjQuTFvBj2TFq5kq9mCp';
-    //checking the weather array returned by openweather api for the main weather condition
+    //checking the weather array returned by openweather api for the main weather condition and setting a default playlist just incase
 
     const handleGetPlaylists = async () => {
-// using access token to fetch the playlists wuth it in the header 
-        await fetch(PLAYLISTS_ENDPOINT + playlistId + '/tracks?limit=12',
-            { method: 'GET', headers: { "Authorization": `Bearer ${accessToken}` }, }
+// using access token to fetch the playlists with it in the header 
+
+        await fetch(PLAYLISTS_ENDPOINT + playlistId + '/tracks?limit=12', // getting the music using the id according to the weather and getting some tracks from that playlist to display
+            { method: 'GET', headers: { "Authorization": `Bearer ${accessToken}` }, } //acesstoken from _getToken
         )
             .then((result) => result.json())
             .then((response) => {
 
-                let items = response.items;
-                setTracks(items);
+                let items = response.items; //response to the request
+                setTracks(items); // the spotify api returns a playList which is an array
             }
             )
             .catch(console.error);
     };
 
-    // mapping
+    //using map method to create a new array with relevant information
     function setTracks(items) {
         const tracks = items.map(({ track }) => ({
             song: track.name,
@@ -44,16 +46,16 @@ const SongRecommendation = (props) => {
             imageUrl: track.album.images[0].url,
             spotifyUrl: track.external_urls.spotify
         }))
-        organizeInRows(tracks);
+        organizeInRows(tracks);// function to organise the tracks in rows
 
     }
 
     function organizeInRows(tracks) {
         const tracksRows = [];
         for (let i = 0; i < tracks.length; i += 6) {
-            tracksRows.push(tracks.slice(i, i + 6));
+            tracksRows.push(tracks.slice(i, i + 6)); // new array returned with slice with only 6 tracks from i to i+6 and pushed into tracksRows 
         }
-        setTracksData(tracksRows);
+        setTracksData(tracksRows);// tracksRow is set to setTracksData function
     }
 
 
