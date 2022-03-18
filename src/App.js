@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import Playlist from "./components/Playlist";
+import { ACCESS_TOKEN_ENDPOINT, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from "./constants";
 import logo from './mlh-prep.png'
 
 function App() {
@@ -9,6 +10,24 @@ function App() {
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
   const [weatherCondition, setWeatherCondtion] = useState('')
+  const [token, setToken] = useState('')
+
+  useEffect(() => {
+    const getToken = async () => {
+      let response = await fetch(ACCESS_TOKEN_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Basic ' + Buffer.from(SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET, 'utf8').toString('base64')
+        },
+        body: 'grant_type=client_credentials'
+      })
+      const data = await response.json()
+
+      setToken(data.access_token)
+    }
+    getToken()
+  }, []);
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
@@ -51,7 +70,7 @@ function App() {
               <i><p>{results.name}, {results.sys.country}</p></i>
             </>}
           </div>
-          {weatherCondition && <Playlist city={city} weatherCondition={weatherCondition} />}
+          {weatherCondition && <Playlist city={city} weatherCondition={weatherCondition} token={token} />}
         </div>
       </>
     )

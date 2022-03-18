@@ -1,7 +1,8 @@
-export const USER_ACCESS_TOKEN = process.env.REACT_APP_USER_ACCESS_TOKEN
 export const SPOTIFY_CLIENT_ID = process.env.REACT_APP_CLIENT_ID
-export const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI
-export const AUTH_ENDPOINT = process.env.REACT_APP_AUTH_ENDPOINT
+export const SPOTIFY_CLIENT_SECRET = process.env.REACT_APP_CLIENT_ID
+export const REDIRECT_URI = 'http://localhost:3000/'
+export const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize'
+export const ACCESS_TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 export const RESPONSE_TYPE = "token"
 export const SPOTIFY_PLAYLIST = 'playlist'
 export const WEATHER_CONDITIONS = {
