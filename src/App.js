@@ -10,7 +10,6 @@ function App() {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
-    console.log("city is => " + city);
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
     .then(res => res.json())
       .then(
@@ -36,10 +35,6 @@ function App() {
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
-        {/* <input
-          type="text"
-          value={city}
-          onChange={event => setCity(event.target.value)} /> */}
 
           <SearchBox 
             setCity={setCity}

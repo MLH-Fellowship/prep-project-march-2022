@@ -6,7 +6,10 @@ const SearchBox = (props) => {
         <>
             <Autocomplete 
             apiKey={process.env.REACT_APP_GOOGLE_MAPS_PLACES_APIKEY}
-            onPlaceSelected={(place) => props.setCity(place.formatted_address)}
+            defaultValue={'New York City'}
+            onPlaceSelected={(place) => {
+                props.setCity(place.address_components[0].long_name);
+            }}
             />
         </>
     );
