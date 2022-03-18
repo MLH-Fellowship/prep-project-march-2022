@@ -8,9 +8,10 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
-  
+  console.log(city)
+
   useEffect(() => {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -19,6 +20,7 @@ function App() {
           } else {
             setIsLoaded(true);  
             setResults(result);
+            
           }
         },
         (error) => {
@@ -28,6 +30,12 @@ function App() {
       )
   }, [city])
 
+  const getCity = (place) => {
+    if (place!==null) {
+      document.getElementById('city').value=place
+      //setCity(place)
+    }  
+  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -38,16 +46,26 @@ function App() {
         <div className="input">
           <h2>Enter a city below 👇</h2>
           <input
+            id="city"
             type="text"
             value={city}
             onChange={event => setCity(event.target.value)} />
         </div>
+        <div className="Results">
+          {!isLoaded && <h2>Loading...</h2>}
+          {console.log(results)}
+          {isLoaded && results && <>
+            <h3 className="weather">{results.weather[0].main}</h3>
+            <p className="feels">Feels like {results.main.feels_like}°C</p>
+            <i><p className="address">{results.name}, {results.sys.country}</p></i>
+          </>}
+        </div>
         <div id='map'>
           {isLoaded && results && <>
-            <Map
+            <Map 
+            getCity={getCity}
             lat = {results.coord.lat}
             lon = {results.coord.lon}
-            city={city}
             googleMapURL= {`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLEAPIKEY}&v=3.exp&libraries=geometry,drawing,places`}
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px`}} />}
@@ -55,15 +73,6 @@ function App() {
           </>}
         </div>
       </div>
-        <div className="Results">
-          {!isLoaded && <h2>Loading...</h2>}
-          {console.log(results)}
-          {isLoaded && results && <>
-            <h3>{results.weather[0].main}</h3>
-            <p>Feels like {results.main.feels_like}°C</p>
-            <i><p>{results.name}, {results.sys.country}</p></i>
-          </>}
-        </div>
     </>
   }
 }
