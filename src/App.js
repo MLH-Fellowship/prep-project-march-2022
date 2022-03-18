@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import './App.css';
+import Playlist from "./components/Playlist";
 import logo from './mlh-prep.png'
 
 function App() {
@@ -7,9 +8,11 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
+  const WEATHER_API_KEY = '3055aee78f153c35e0fa1c8d0afdaf90'
+  const [weather_condition, set_weather_condtion] = useState('')
 
   useEffect(() => {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&appid=" + process.env.REACT_APP_APIKEY)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -18,6 +21,7 @@ function App() {
           } else {
             setIsLoaded(true);
             setResults(result);
+            set_weather_condtion(results?.weather[0]?.main)
           }
         },
         (error) => {
@@ -47,6 +51,9 @@ function App() {
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
         </div>
+        {/* <a href={`${AUTH_ENDPOINT}?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>login</a> */}
+
+        {weather_condition && <Playlist city={city} weather_condition={weather_condition} />}
       </div>
     </>
   }
