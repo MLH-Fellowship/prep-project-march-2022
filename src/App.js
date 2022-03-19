@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
-<<<<<<< HEAD
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
-=======
 import Suggestions from './components/suggestions/suggestions'
->>>>>>> d1fdb547fe0a3b688960186939d92cfcf2720d3d
 
 function App() {
   const [error, setError] = useState(null);
@@ -96,23 +93,11 @@ function currentweather(lat, lon){
           onChange={event => setCity(event.target.value)} />
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-<<<<<<< HEAD
           {isLoaded && results && <>
             <h3>{results.weather[0].main}</h3>
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
-=======
-          {console.log(results)}
-          {isLoaded && results && 
-            <>
-              <h3>{results.weather[0].main}</h3>
-              <p>Feels like {results.main.feels_like}°C</p>
-              <i><p>{results.name}, {results.sys.country}</p></i>
-            </>
-            
-          }
->>>>>>> d1fdb547fe0a3b688960186939d92cfcf2720d3d
         </div>
         {isLoaded && results &&
         <Suggestions
