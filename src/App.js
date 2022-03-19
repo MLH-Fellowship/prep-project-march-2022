@@ -126,12 +126,12 @@ function App() {
 
           }
         </div>
-        {weatherCondition && <Playlist city={city} weatherCondition={weatherCondition} token={token}/>}
         {isLoaded && results &&
           <Suggestions
             weather={results.weather[0].main}
           />
         }
+        {weatherCondition && <Playlist city={city} weatherCondition={weatherCondition} token={token}/>}
       </div>
     </>
   }
