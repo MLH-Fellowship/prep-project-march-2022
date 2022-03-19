@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import CardListing from './CardListing';
+import CardListing from './playlists/CardListing';
 
 function Playlist({ city, weather_condition }) {
 
