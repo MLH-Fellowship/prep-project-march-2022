@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
 function App() {
   const [error, setError] = useState(null);
@@ -148,6 +149,7 @@ function currentweather(lat, lon){
     return <div>Error: {error.message}</div>;
   } else {
 
+
     return (
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
@@ -173,11 +175,18 @@ function currentweather(lat, lon){
               </>
             )}
           </div>
+
         {isLoaded && results &&
         <Suggestions
           weather={results.weather[0].main}
         />
         }
+
+        </div>
+        <div>
+            {isLoaded && results && <>
+            <SongRecommendation options={results} />
+            </>}
         </div>
         <div className="food-recommendations">
           <h2 className="food-recommendations-title">
@@ -186,6 +195,7 @@ function currentweather(lat, lon){
 
           {fooditems && <FoodCarousel items={fooditems} />}
         </div>
+
       </>
     );
 
