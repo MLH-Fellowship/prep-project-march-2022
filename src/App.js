@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import Suggestions from './components/suggestions/suggestions'
+
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -90,12 +92,20 @@ function currentweather(lat, lon){
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
           {console.log(results)}
-          {isLoaded && results && <>
-            <h3>{results.weather[0].main}</h3>
-            <p>Feels like {results.main.feels_like}°C</p>
-            <i><p>{results.name}, {results.sys.country}</p></i>
-          </>}
+          {isLoaded && results && 
+            <>
+              <h3>{results.weather[0].main}</h3>
+              <p>Feels like {results.main.feels_like}°C</p>
+              <i><p>{results.name}, {results.sys.country}</p></i>
+            </>
+            
+          }
         </div>
+        {isLoaded && results &&
+        <Suggestions
+          weather={results.weather[0].main}
+        />
+        }
       </div>
     </>
   }
