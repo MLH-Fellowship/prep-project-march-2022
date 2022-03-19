@@ -5,11 +5,6 @@ import logo from "./mlh-prep.png";
 import FoodItem from "./foodItem";
 import FoodCarousel from "./FoodCarousel";
 import Suggestions from './components/suggestions/suggestions'
-
-import { useEffect, useState } from "react";
-import './App.css';
-import logo from './mlh-prep.png'
-
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
 function App() {
