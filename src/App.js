@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import Suggestions from './components/suggestions/suggestions'
 
 function App() {
@@ -85,21 +86,18 @@ function currentweather(lat, lon){
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
+        
         <input
           type="text"
           value={city}
           onChange={event => setCity(event.target.value)} />
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-          {console.log(results)}
-          {isLoaded && results && 
-            <>
-              <h3>{results.weather[0].main}</h3>
-              <p>Feels like {results.main.feels_like}°C</p>
-              <i><p>{results.name}, {results.sys.country}</p></i>
-            </>
-            
-          }
+          {isLoaded && results && <>
+            <h3>{results.weather[0].main}</h3>
+            <p>Feels like {results.main.feels_like}°C</p>
+            <i><p>{results.name}, {results.sys.country}</p></i>
+          </>}
         </div>
         {isLoaded && results &&
         <Suggestions
@@ -107,6 +105,11 @@ function currentweather(lat, lon){
         />
         }
       </div>
+      <div>
+            {isLoaded && results && <>
+            <SongRecommendation options={results} />
+            </>}
+        </div>
     </>
   }
 }
