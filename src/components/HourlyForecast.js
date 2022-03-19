@@ -53,7 +53,7 @@ const HourlyForecast = ({results, lat, lon, city ,key}) => {
 
 const days = { 0 : 'Sun', 1 : 'Mon', 2 : 'Tue', 3 : 'Wed', 4 : 'Thu', 5 : 'Fri', 6 : 'Sat' };
 const keys = Object.values(days);
-
+const no = "10d";
   return (
     <div>
       <div className="component">
@@ -67,6 +67,7 @@ const keys = Object.values(days);
             </Typography>
             <Typography color="text.secondary">{keys[new Date(data==null?0:(data.hourly[index].dt)*1000).getDay()]}</Typography>
             <Typography variant="h4">{data==null?0:((data.hourly[index].feels_like).toFixed(2))}° K</Typography>
+            <img src={`http://openweathermap.org/img/wn/${data==null?0:data.hourly[index].weather[0].icon}@2x.png`} />
             </CardContent>
         ))
         }
