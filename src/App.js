@@ -32,8 +32,8 @@ function App() {
 
   const getCity = (place) => {
     if (place!==null) {
+      setCity(place)
       document.getElementById('city').value=place
-      //setCity(place)
     }  
   }
 
@@ -63,6 +63,7 @@ function App() {
         <div id='map'>
           {isLoaded && results && <>
             <Map 
+            city={city}
             getCity={getCity}
             lat = {results.coord.lat}
             lon = {results.coord.lon}

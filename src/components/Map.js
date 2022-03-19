@@ -5,7 +5,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, } from "react-google-ma
 
 const Map = withScriptjs(withGoogleMap((props) => {
   const [latLng, setLatLng] = React.useState([props.lat, props.lon])
-  const [place, setPlace] = React.useState(null)
+  const [place, setPlace] = React.useState(props.city)
   const handleClick = (e) => setLatLng([e.latLng.lat(), e.latLng.lng()])
     
 React.useEffect(() =>{
