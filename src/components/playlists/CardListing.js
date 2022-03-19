@@ -1,6 +1,6 @@
 import React from 'react'
 import CardComp from './CardComp'
-import "../styles/CardListing.css";
+import "../../styles/CardListing.css";
 
 
 const CardListing = ({ playlists }) => {
