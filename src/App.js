@@ -5,11 +5,14 @@ import HourlyForecast from './components/HourlyForecast.js'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import Suggestions from './components/suggestions/suggestions'
 
+
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("Globe")
   const [results, setResults] = useState(null);
+  const [lat , setLat] = useState(0.00);
+  const [lon , setLon] = useState(0.00);
 
 useEffect(() => {
     if (navigator.geolocation){
@@ -71,6 +74,8 @@ function currentweather(lat, lon){
           } else {
             setIsLoaded(true);
             setResults(result);
+            setLat(result.coord.lat);
+            setLon(result.coord.lon)
           }
         },
         (error) => {
@@ -79,7 +84,7 @@ function currentweather(lat, lon){
         }
       )
   }, [city])
-
+  
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -114,8 +119,7 @@ function currentweather(lat, lon){
             {isLoaded && results && <>
             <SongRecommendation options={results} />
             </>}
-      </div>
-
+       </div>
     </>
   }
 }
