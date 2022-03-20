@@ -4,6 +4,8 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./HourlyForecast.css";
 
+import { useEffect, useState } from "react";
+
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -22,8 +24,33 @@ const responsive = {
     items: 1,
   },
 };
+const HourlyForecast = (results) => {
+  console.log(results)
+  
+  useEffect(() => {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=daily&appid="+process.env.REACT_APP_APIKEY)
+        .then((res) => res.json())
+        .then(
+            (result) => {
+                if (result.cod !== "200") {
+                   console.log(result);
+                   console.log("😍 = " + result.hourly[0].feels_like);
+                   console.log("😍 = " + result.hourly[0].weather[0].icon);
+                   const dt = result.hourly[0].dt;
+                   var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                   var day = new Date(dt*1000);
+                   console.log(day.getUTCHours() + " UTC")
+                   console.log(days[day.getDay()])
+                } else {
+                   console.log("Something is worng Error");
+              
+                }
+            }
+        )
+        .catch(err => console.log(err.message));
 
-const HourlyForecast = () => {
+}, []);
+
   return (
     <div>
       <div className="component">
