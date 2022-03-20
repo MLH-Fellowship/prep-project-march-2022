@@ -1,9 +1,9 @@
-
 import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import FoodItem from "./foodItem";
 import FoodCarousel from "./FoodCarousel";
+import SearchBox from './components/SearchBox'
 import Suggestions from './components/suggestions/suggestions'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
@@ -121,7 +121,6 @@ function currentweather(lat, lon){
         "&appid=" +
         process.env.REACT_APP_APIKEY
     )
-      .then((res) => res.json())
       .then(
         (result) => {
           if (result["cod"] !== 200) {
@@ -143,34 +142,24 @@ function currentweather(lat, lon){
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
-
-
     return (
       <>
-        <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
-          <h2>Enter a city below 👇</h2>
-          <input
-            type="text"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-          />
-          <div className="Results">
-            {!isLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {isLoaded && results && (
-              <>
-                <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
-                <i>
-                  <p>
-                    {results.name}, {results.sys.country}
-                  </p>
-                </i>
-              </>
-            )}
-          </div>
+      <img className="logo" src={logo} alt="MLH Prep Logo"></img>
+      <div>
+        <h2>Enter a city below 👇</h2>
 
+          <SearchBox 
+            setCity={setCity}
+          />
+
+        <div className="Results">
+          {!isLoaded && <h2>Loading...</h2>}
+          {isLoaded && results && <>
+            <h3>{results.weather[0].main}</h3>
+            <p>Feels like {results.main.feels_like}°C</p>
+            <i><p>{results.name}, {results.sys.country}</p></i>
+          </>}
+        </div>
         {isLoaded && results &&
         <Suggestions
           weather={results.weather[0].main}
