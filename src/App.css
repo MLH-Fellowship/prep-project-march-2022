@@ -13,20 +13,44 @@ margin-top: 20px;
 }
 
 input {
-padding: 10px;
+padding: 0.75% 1%;
 border-radius: 4px;
 border: 10px;
-width: 200px
+width: 51%;
 }
 
 .Results {
 background-color: white;
-margin-left: 150px;
-margin-right: 150px;
+margin-left: auto;
+margin-right: auto;
 margin-top: 20px;
 border-radius: 8px;
 color: black;
-padding: 10px;
+padding: 5% 20%;
 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+width: fit-content;
 }
 
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+  input {
+    width: 75%;
+  }
+
+  .Results {
+    padding: 5% 15%;
+    width: 60%
+  }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+  input {
+    width: 65%;
+  }
+
+  .Results {
+    padding: 5% 25%;
+  }
+}
