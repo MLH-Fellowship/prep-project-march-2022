@@ -7,15 +7,19 @@ const Map = withScriptjs(withGoogleMap((props) => {
   const [latLng, setLatLng] = React.useState([props.lat, props.lon])
   const [place, setPlace] = React.useState(props.city)
   const handleClick = (e) => setLatLng([e.latLng.lat(), e.latLng.lng()])
+
+  
     
 React.useEffect(() =>{
-  fetch(`http://api.positionstack.com/v1/reverse?access_key=4ffa39995acf5061ae3a8003c25fecc9&query=${latLng[0]},${latLng[1]}`)
+  fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latLng[0]}&lon=${latLng[1]}&limit=1&appid=${process.env.REACT_APP_APIKEY}`)
     .then(res => res.json())
     .then(data => 
-      setPlace(data.data[0].administrative_area))
+      setPlace(data[0].name))
 }, [latLng])
-
+console.log(place)
 props.getCity(place)
+
+
 
   return (
     <GoogleMap

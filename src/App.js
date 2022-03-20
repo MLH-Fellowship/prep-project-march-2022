@@ -32,6 +32,7 @@ function App() {
 
   const getCity = (place) => {
     if (place!==null) {
+      console.log(place)
       setCity(place)
       document.getElementById('city').value=place
     }  
