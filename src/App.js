@@ -4,8 +4,10 @@ import logo from "./mlh-prep.png";
 import FoodItem from "./foodItem";
 import FoodCarousel from "./FoodCarousel";
 import SearchBox from './components/SearchBox'
+import HourlyForecast from './components/HourlyForecast.js'
 import Suggestions from './components/suggestions/suggestions'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
+
 
 function App() {
   const [error, setError] = useState(null);
@@ -13,6 +15,8 @@ function App() {
 
   const [city, setCity] = useState("Globe")
   const [results, setResults] = useState(null);
+  const [lat , setLat] = useState(0.00);
+  const [lon , setLon] = useState(0.00);
 
   const [fooditems, setFooditems] = useState(null);
 
@@ -129,6 +133,8 @@ function currentweather(lat, lon){
           } else {
             setIsLoaded(true);
             setResults(result);
+            setLat(result.coord.lat);
+            setLon(result.coord.lon)
             change(result);
           }
         },
@@ -136,8 +142,8 @@ function currentweather(lat, lon){
           setIsLoaded(true);
           setError(error);
         }
-      );
-  }, [city]);
+      )
+  }, [city])
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -165,8 +171,11 @@ function currentweather(lat, lon){
           weather={results.weather[0].main}
         />
         }
-
         </div>
+      <div>
+        {/* <HourlyForecast results = {results} /> */}
+        <HourlyForecast results = {results} lat = {lat} lon = {lon}  city={city} key ={1}/>
+      </div>
         <div>
             {isLoaded && results && <>
             <SongRecommendation options={results} />
@@ -182,7 +191,6 @@ function currentweather(lat, lon){
 
       </>
     );
-
   }
 }
 
