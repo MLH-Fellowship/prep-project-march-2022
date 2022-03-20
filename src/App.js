@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import HourlyForecast from './components/HourlyForecast.js'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import Suggestions from './components/suggestions/suggestions'
 
@@ -106,10 +107,15 @@ function currentweather(lat, lon){
         }
       </div>
       <div>
+        {/* <HourlyForecast results = {results} /> */}
+        <HourlyForecast results = {results} lat = {lat} lon = {lon}  city={city} key ={1}/>
+      </div>
+      <div>
             {isLoaded && results && <>
             <SongRecommendation options={results} />
             </>}
-        </div>
+       </div>
+
     </>
   }
 }
