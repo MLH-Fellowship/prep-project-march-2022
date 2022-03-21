@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import "./App.css";
 import axios from "axios";
-import Result from "./Components/Result";
+import LineChart from "./Components/LineChart";
 import logo from "./mlh-prep.png";
 import { DebounceInput } from "react-debounce-input";
 const { REACT_APP_APIKEY } = process.env;
@@ -113,7 +113,7 @@ function App() {
           )}
         </div>
       </div>
-      <Result results={results} />
+      <LineChart results={results} />
     </>
   );
 }

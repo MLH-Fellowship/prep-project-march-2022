@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import "./LineChart.css";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
-const Result = (results) => {
+const LineChart = (results) => {
   const tempertureDataPoints = results.results.list.map((index) => {
     return index.main.temp - 273.15;
   });
@@ -15,17 +16,12 @@ const Result = (results) => {
       hour: "numeric",
       minute: "numeric",
     });
-
     return day;
   });
-  const style = {
-    backgroundColor: "white",
-    margin: "2%",
-  };
   return (
-    <div>
+    <div class="line-container">
       <Line
-        style={style}
+        class="line-chart"
         datasetIdKey="id"
         data={{
           labels: timeLabels,
@@ -46,4 +42,4 @@ const Result = (results) => {
   );
 };
 
-export default Result;
+export default LineChart;
