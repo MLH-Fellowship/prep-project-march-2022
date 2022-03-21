@@ -18,6 +18,8 @@ function App() {
 
   const url = "https://api.openweathermap.org/data/2.5/weather?q=";
 
+  let forceNotifyByEnter = true
+
   const fetchLocation = async (location) => {
     axios
       .get(
@@ -26,7 +28,25 @@ function App() {
       .then((res) => {
         setLatitude(res.data[0].lat);
         setLongitude(res.data[0].lon);
-      });
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      })
   };
   const fetchWeatherData = async () => {
     axios
@@ -46,8 +66,11 @@ function App() {
   useEffect(async () => {
     try {
       setLoading(true);
-      fetchLocation(city);
-      console.log(city)
+      try {
+        fetchLocation(city);
+      } catch (error) {
+        console.log(error);
+      }
       const results = await fetchWeatherData();
       setResults(results);
       setLoading(false);
@@ -69,20 +92,12 @@ function App() {
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
-        {/* <input
-          type="text"
-          value={city}
-          name="city input" 
-          onChange={handleChange} 
-        /> */}
-
         <DebounceInput
             minLength={5}
-            debounceTimeout={300}
+            debounceTimeout={2000}
             value={city}
-            onChange={event => setCity(event.target.value)} />
-        
-
+            forceNotifyByEnter={forceNotifyByEnter}
+            onChange={event => setCity(event.target.value)} /> 
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
           {isLoaded && results && (
@@ -98,7 +113,7 @@ function App() {
           )}
         </div>
       </div>
-      <Result results={results} />;
+      <Result results={results} />
     </>
   );
 }
