@@ -4,11 +4,9 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const Result = (results) => {
-  // console.log(results.results.list);
   const tempertureDataPoints = results.results.list.map((index) => {
     return index.main.temp - 273.15;
   });
-  // console.log(results.results.list);
   const timeLabels = results.results.list.map((index) => {
     let date = new Date(index.dt * 1000);
     let day = date.toLocaleDateString(undefined, {
