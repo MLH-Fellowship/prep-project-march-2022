@@ -1,0 +1,57 @@
+.card {
+	width: 190px;
+	height: 180px;
+	margin: 5px;
+	position: relative;
+	min-width: 190px;
+	background: #000;
+}
+.card:hover .overlayer {
+	visibility: visible;
+}
+.song-image {
+	width: 100%;
+	height: 94%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card .overlayer {
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: rgba(0,0,0,0.6);
+	text-align: center;
+	visibility: hidden;
+    pointer-events: none;
+}
+
+.songs-container {
+	display: flex;
+  flex-wrap: wrap;
+  justify-content: center
+}
+
+.song-card {
+    padding-left: 0%;
+    padding-right: 0%;
+    padding-top: 0px;
+    padding-bottom: 120px;
+}
+
+.song-title {
+    padding-top: 8px;
+    font-weight: 400;
+}
+
+.song-artist {
+    font-weight: 200;
+}
+
+.songs-row {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
