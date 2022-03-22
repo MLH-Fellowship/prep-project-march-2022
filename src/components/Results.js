@@ -12,7 +12,7 @@ export default function Results({results, error, isLoaded}){
           {console.log(results)}
           {isLoaded && results && <>
             <h3 className="weather">{results.weather[0].main}</h3>
-            <p className="feels">Feels like {results.main.feels_like}°C</p>
+            <p className="feels">Feels like {Math.floor(results.main.feels_like)-272}°C</p>
             <i><p className="address">{results.name}, {results.sys.country}</p></i>
           </>}
         </div>

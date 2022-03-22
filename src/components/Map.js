@@ -2,25 +2,29 @@ import React from "react"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, } from "react-google-maps"
 
 
-
 const Map = withScriptjs(withGoogleMap((props) => {
   
-  
-  const handleClick = (e) => props.setLatLng([e.latLng.lat(), e.latLng.lng()])
+  const MapContext = React.createContext({lat: props.latLng[0], lng: props.latLng[1]})
   
 
   return (
+
     
+    <MapContext.Consumer>
+      {value => (
       <GoogleMap
-      onClick={handleClick}
-      defaultZoom={6}
-      defaultCenter={{ lat: props.latLng[0], lng: props.latLng[1]}}
+      onClick={props.handleClick}
+      defaultZoom={7}
+      defaultCenter={{ ...value }}
       >
-      <Marker  position={{ lat: props.latLng[0], lng: props.latLng[1]}} />
+      <Marker  position={{...value}} />
       
       </GoogleMap>
 
-    
+)}
+
+    </MapContext.Consumer>
+       
   )
 }
   ))
