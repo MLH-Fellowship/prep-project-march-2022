@@ -7,7 +7,21 @@ import SearchBox from './components/SearchBox'
 import HourlyForecast from './components/HourlyForecast.js'
 import Suggestions from './components/suggestions/suggestions'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
+const weatherAlerts = {
+  Thunderstorm : "Thunderstorm Warning. Please stay indoors.",
+  Snow : "Heavy snow Warning. Please stay indoors.",
+  Mist : "Low visibility due to Mist. Please stay indoors.",
+  Smoke : "Low visibility and high pollution due to smoke. Please stay indoors.",
+  Haze : "Low visibility and high pollution due to Haze. Please stay indoors.",
+  Sand : "Sand / Dust Warning. Please stay indoors.",
+  Dust : "Sand / Dust Warning. Please stay indoors.",
+  Tornado : "Tornado Warning. Please stay indoors",
+  Rain : "Heavy Intensity Rain. Please stay indoors."
+};
 
 function App() {
   const [error, setError] = useState(null);
@@ -21,48 +35,48 @@ function App() {
   const [fooditems, setFooditems] = useState(null);
 
   const change = (response) => {
-    let endpoint1 =
-      "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +
-      process.env.REACT_APP_FOODAPIKEY;
-    let endpoint2 = endpoint1;
-    let endpoint3 = endpoint1;
-    if (response.weather[0].main === "Rain") {
-      endpoint1 = endpoint1 + "&query=noodle,soup&number=5&sort=random";
-      endpoint2 = endpoint2 + "&query=pot&number=5&sort=random";
-      endpoint3 = endpoint3 + "&type=fingerfood&number=5&sort=random";
-    } else if (
-      response.weather[0].main === "Snow" ||
-      response.main.feels_like < 10
-    ) {
-      endpoint1 = endpoint1 + "&type=soup&number=5&sort=random";
-      endpoint2 = endpoint2 + "&query=mug&number=5&sort=random";
-      endpoint3 = endpoint3 + "&query=stroganoff&number=5&sort=random";
-    } else {
-      endpoint1 = endpoint1 + "&type=beverage&number=5&sort=random";
-      endpoint2 = endpoint2 + "&query=summer,salad&number=5&sort=random";
-      endpoint3 = endpoint3 + "&query=sorbet&number=5&sort=random";
-    }
+    // let endpoint1 =
+    //   "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +
+    //   process.env.REACT_APP_FOODAPIKEY;
+    // let endpoint2 = endpoint1;
+    // let endpoint3 = endpoint1;
+    // if (response.weather[0].main === "Rain") {
+    //   endpoint1 = endpoint1 + "&query=noodle,soup&number=5&sort=random";
+    //   endpoint2 = endpoint2 + "&query=pot&number=5&sort=random";
+    //   endpoint3 = endpoint3 + "&type=fingerfood&number=5&sort=random";
+    // } else if (
+    //   response.weather[0].main === "Snow" ||
+    //   response.main.feels_like < 10
+    // ) {
+    //   endpoint1 = endpoint1 + "&type=soup&number=5&sort=random";
+    //   endpoint2 = endpoint2 + "&query=mug&number=5&sort=random";
+    //   endpoint3 = endpoint3 + "&query=stroganoff&number=5&sort=random";
+    // } else {
+    //   endpoint1 = endpoint1 + "&type=beverage&number=5&sort=random";
+    //   endpoint2 = endpoint2 + "&query=summer,salad&number=5&sort=random";
+    //   endpoint3 = endpoint3 + "&query=sorbet&number=5&sort=random";
+    // }
 
-    Promise.all([
-      fetch(endpoint1 + "&addRecipeInformation=true").then((res) => res.json()),
-      fetch(endpoint2 + "&addRecipeInformation=true").then((res) => res.json()),
-      fetch(endpoint3 + "&addRecipeInformation=true").then((res) => res.json()),
-    ]).then(
-      (food) => {
-        if (food != null) {
-          let arr = food[0]["results"]
-            .concat(food[1]["results"])
-            .concat(food[2]["results"]);
-          setFooditems(arr);
-          console.log(fooditems);
-        } else {
-          console.log("No results found");
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // Promise.all([
+    //   fetch(endpoint1 + "&addRecipeInformation=true").then((res) => res.json()),
+    //   fetch(endpoint2 + "&addRecipeInformation=true").then((res) => res.json()),
+    //   fetch(endpoint3 + "&addRecipeInformation=true").then((res) => res.json()),
+    // ]).then(
+    //   (food) => {
+    //     if (food != null) {
+    //       let arr = food[0]["results"]
+    //         .concat(food[1]["results"])
+    //         .concat(food[2]["results"]);
+    //       setFooditems(arr);
+    //       console.log(fooditems);
+    //     } else {
+    //       console.log("No results found");
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   };
 
 
@@ -107,6 +121,8 @@ function currentweather(lat, lon){
             setIsLoaded(true);
             setResults(result);
             setCity(result.name);
+            if((result.weather[0].main === "Rain" && result.weather[0].description !== "light rain" && result.weather[0].description !== "moderate rain") || result.weather[0].main !== "Rain")
+            toast.warn(weatherAlerts[result.weather[0].main], {autoClose: 8000});
           }
         },
         (error) => {
@@ -126,6 +142,7 @@ function currentweather(lat, lon){
         process.env.REACT_APP_APIKEY
     )
     .then(result => result.json())
+
       .then(
         (result) => {
           if (result["cod"] !== 200) {
@@ -135,8 +152,10 @@ function currentweather(lat, lon){
             setIsLoaded(true);
             setResults(result);
             setLat(result.coord.lat);
-            setLon(result.coord.lon)
+            setLon(result.coord.lon);
             change(result);
+            if((result.weather[0].main === "Rain" && result.weather[0].description !== "light rain" && result.weather[0].description !== "moderate rain") || result.weather[0].main !== "Rain")
+            toast.warn(weatherAlerts[result.weather[0].main], {autoClose: 8000});
           }
         },
         (error) => {
@@ -165,8 +184,18 @@ function currentweather(lat, lon){
             <h3>{results.weather[0].main}</h3>
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
+            
           </>}
         </div>
+
+
+        {/* <div>
+        {isLoaded && results && <>
+          <WeatherAlerts weather={results.weather[0].main}/>
+            </>}
+        </div> */}
+
+
         {isLoaded && results &&
         <Suggestions
           weather={results.weather[0].main}
@@ -178,7 +207,7 @@ function currentweather(lat, lon){
         <HourlyForecast results = {results} lat = {lat} lon = {lon}  city={city} key ={1}/>
       </div>
         <div>
-            {isLoaded && results && <>
+            {city!=="Globe" && <>
             <SongRecommendation options={results} />
             </>}
         </div>
