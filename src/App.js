@@ -125,6 +125,7 @@ function currentweather(lat, lon){
         "&appid=" +
         process.env.REACT_APP_APIKEY
     )
+    .then(result => result.json())
       .then(
         (result) => {
           if (result["cod"] !== 200) {
