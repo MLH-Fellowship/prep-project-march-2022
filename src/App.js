@@ -130,8 +130,8 @@ function App() {
         "&appid=" +
         process.env.REACT_APP_APIKEY
     )
-      .then((res) => res.json())
-      .then(
+    .then(result => result.json())
+    .then(
         (result) => {
           if (result["cod"] !== 200) {
             setIsLoaded(false);
