@@ -1,32 +1,116 @@
 body {
-    background-color: #133667;
-    color: white;
-    text-align: center;
+  background-color: #133667;
+  color: white;
+  text-align: center;
 }
 
 .logo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 20%;
-  margin-top: 20px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 20%;
+margin-top: 20px;
 }
 
 input {
-  padding: 10px;
-  border-radius: 4px;
-  border: 10px;
-  width: 200px
+padding: 0.75% 1%;
+border-radius: 4px;
+border: 10px;
+width: 51%;
 }
 
 .Results {
-  background-color: white;
-  margin-left: 150px;
-  margin-right: 150px;
-  margin-top: 20px;
-  border-radius: 8px;
-  color: black;
+background-color: white;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+border-radius: 8px;
+color: black;
+padding: 5% 20%;
+box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+width: fit-content;
+}
+
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+  input {
+    width: 75%;
+  }
+
+  .Results {
+    padding: 5% 15%;
+    width: 60%
+  }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+  input {
+    width: 65%;
+  }
+
+  .Results {
+    padding: 5% 25%;
+  }
+}
+
+.food-item-container {
+  color: navy;
   padding: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.food-item-img {
+  border-radius: 30px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.food-recommendations-title {
+  color: white;
+  margin: 50px auto;
+}
+
+/* Slideshow */
+
+.slideshow {
+  margin: 40px auto;
+  overflow: hidden;
+  max-width: 500px;
+}
+
+.slideshowSlider {
+  white-space: nowrap;
+  transition: ease 1000ms;
+}
+
+.slide {
+  display: inline-block;
+  /* background-color: rgb(209, 247, 167); */
+  background-color: rgb(232, 233, 160);
+  height: 400px;
+  width: 100%;
+  border-radius: 40px;
+}
+
+/* Buttons */
+
+.slideshowDots {
+  text-align: center;
+}
+
+.slideshowDot {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  margin: 15px 7px 0px;
+
+  background-color: #c4c4c4;
+}
+
+.slideshowDot.active {
+  background-color: #6a0dad;
 }
 
