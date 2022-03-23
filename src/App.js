@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo, Component } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import FoodItem from "./foodItem";
@@ -7,12 +7,16 @@ import SearchBox from './components/SearchBox'
 import HourlyForecast from './components/HourlyForecast.js'
 import Suggestions from './components/suggestions/suggestions'
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
+import axios from "axios";
+import LineChart from "./components/LineChart.jsx"
+import { DebounceInput } from "react-debounce-input";
+const { REACT_APP_APIKEY } = process.env;
 
 
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const [city, setCity] = useState("Globe")
   const [results, setResults] = useState(null);
   const [lat , setLat] = useState(0.00);
@@ -66,56 +70,56 @@ function App() {
   };
 
 
-useEffect(() => {
-    if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(showPosition,showError);
-    }
-    else{
-      window.alert("Geolocation is not supported by this browser.");
-    }
+  useEffect(() => {
+      if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(showPosition,showError);
+      }
+      else{
+        window.alert("Geolocation is not supported by this browser.");
+      }
 
-function showPosition(position){
-  var lat=position.coords.latitude;
-  var lon=position.coords.longitude;
-  currentweather(lat,lon);
-}
-function showError(error){
-    switch(error.code){
-      case error.PERMISSION_DENIED:
-                window.alert("User denied the request for Geolocation.")
-              break;
-              case error.POSITION_UNAVAILABLE:
-                window.alert("Location information is unavailable.")
-              break;
-              case error.TIMEOUT:
-                window.alert(" The request to get user location timed out.")
-              break;
-              case error.UNKNOWN_ERROR:
-                window.alert("An unknown error occurred.")
-              break;
-    }
-}
+  function showPosition(position){
+    var lat=position.coords.latitude;
+    var lon=position.coords.longitude;
+    currentweather(lat,lon);
+  }
+  function showError(error){
+      switch(error.code){
+        case error.PERMISSION_DENIED:
+                  window.alert("User denied the request for Geolocation.")
+                break;
+                case error.POSITION_UNAVAILABLE:
+                  window.alert("Location information is unavailable.")
+                break;
+                case error.TIMEOUT:
+                  window.alert(" The request to get user location timed out.")
+                break;
+                case error.UNKNOWN_ERROR:
+                  window.alert("An unknown error occurred.")
+                break;
+      }
+  }
 
-function currentweather(lat, lon){
-  fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=" + process.env.REACT_APP_APIKEY + "&units=metric") 
-      .then(res => res.json())
-      .then(
-        (result) => {
-          if (result['cod'] !== 200) {
-            setIsLoaded(false)
-          } else {
+  function currentweather(lat, lon){
+    fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=" + process.env.REACT_APP_APIKEY + "&units=metric") 
+        .then(res => res.json())
+        .then(
+          (result) => {
+            if (result['cod'] !== 200) {
+              setIsLoaded(false)
+            } else {
+              setIsLoaded(true);
+              setResults(result);
+              setCity(result.name);
+            }
+          },
+          (error) => {
             setIsLoaded(true);
-            setResults(result);
-            setCity(result.name);
+            setError(error);
           }
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-}
-},[])
+        )
+  }
+  },[])
 
   useEffect(() => {
     fetch(
@@ -144,7 +148,65 @@ function currentweather(lat, lon){
           setError(error);
         }
       )
-  }, [city])
+    }
+  )
+
+
+  let forceNotifyByEnter = true
+
+  const fetchLocation = async (location) => {
+    axios
+      .get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${REACT_APP_APIKEY}`
+      )
+      .then((res) => {
+        setLat(res.data[0].lat);
+        setLon(res.data[0].lon);
+      })
+      .catch(function (error) {
+        if (error.response) {
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      })
+  };
+  const fetchWeatherData = async () => {
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${REACT_APP_APIKEY}`
+      )
+      .then((res) => {
+        const allData = res.data;
+        setResults(allData);
+      })
+      .catch((err) => {
+        console.log(err.toJSON());
+      });
+  };
+
+  
+  useEffect(async () => {
+    try {
+      setLoading(true);
+      try {
+        fetchLocation(city);
+      } catch (error) {
+        console.log(error);
+      }
+      const results = await fetchWeatherData();
+      setResults(results);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    } finally {
+    }
+  }, [city]);
+
+  if (loading) return <span>Loading</span>;
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -189,7 +251,7 @@ function currentweather(lat, lon){
 
           {fooditems && <FoodCarousel items={fooditems} />}
         </div>
-
+        <LineChart results={results} />
       </>
     );
   }
