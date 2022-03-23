@@ -4,6 +4,9 @@ import logo from './mlh-prep.png'
 import Map from './components/Map'
 import Results from './components/Results'
 import Input from './components/Input'
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import Mymap from "./Mymap";
+
 
 function App() {
   const [error, setError] = useState(null);
@@ -73,6 +76,11 @@ function App() {
           error={error}
         />
         <div id='map'>
+          <Wrapper apiKey={process.env.REACT_APP_GOOGLEAPIKEY}>
+            <Mymap zoom={6} center = {{ lat: latLng[0], lng: latLng[1] }}/>
+          </Wrapper>
+        </div>
+        {/* <div id='map'>
           {isLoaded && results && <>
             
             <Map 
@@ -84,7 +92,7 @@ function App() {
             containerElement={<div style={{ height: `400px`}} />}
             mapElement={<div className={`map-google`} style={{ height: `100%`}} />}/>
           </>}
-        </div>
+        </div> */}
       </div>
     </>
   )
