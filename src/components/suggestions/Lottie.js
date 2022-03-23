@@ -1,36 +1,30 @@
-import React from 'react';
+import { useState } from 'react';
 import Lottie from 'react-lottie';
 
-export default class LottieControl extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isStopped: false, isPaused: false };
-  }
+const LottieControl = ({ animationData }) => {
+  const [isStopped] = useState(false);
+  const [isPaused] = useState(false);
 
-  render() {
-    const { animationData } = this.props;
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
 
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice',
-      },
-    };
-
-    const { isStopped, isPaused } = this.state;
-
-    return (
-      <div>
-        <Lottie
-          options={defaultOptions}
-          height="14rem"
-          width="14rem"
-          isStopped={isStopped}
-          isPaused={isPaused}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Lottie
+        options={defaultOptions}
+        height='14rem'
+        width='14rem'
+        isStopped={isStopped}
+        isPaused={isPaused}
+      />
+    </div>
+  );
 }
+
+export default LottieControl
