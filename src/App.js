@@ -136,6 +136,7 @@ const App = () => {
           setError(error);
         }
       );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   if (error) {
