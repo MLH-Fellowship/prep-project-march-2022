@@ -12,7 +12,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [city, setCity] = useState("New York City");
+  const [city, setCity] = useState("Globe");
   const [results, setResults] = useState(null);
   const [lat, setLat] = useState(0.0);
   const [lon, setLon] = useState(0.0);
