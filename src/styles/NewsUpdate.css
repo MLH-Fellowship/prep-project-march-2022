@@ -1,0 +1,21 @@
+.news_update_wrapper {
+  height: 200px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.news_update_wrapper > p {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.news_update_listing {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 5%;
+  justify-content: center;
+  align-items: center;
+}
