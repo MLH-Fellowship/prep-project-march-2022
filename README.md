@@ -18,7 +18,7 @@ Steps:
 - Sign Up with email. Confirm your account by following the steps in the email sent by spoonacular
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/73184612/159624823-98c00147-d4b9-44c8-bd25-98290f6d5517.png">
 
-- After confirming, log in to your account 
+- After confirming, log in to your account. You will automatically be subscribed to the free plan.
 - Go to the profile section on the dashboard, and click on 'Show/Hide API key' button
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/73184612/159625250-9894be85-d265-4445-8882-c953d59225ac.png">
 
