@@ -4,7 +4,7 @@ import logo from './mlh-prep.png';
 import FoodCarousel from './components/FoodCarousel/FoodCarousel';
 import SearchBox from './components/SearchBox/SearchBox';
 import HourlyForecast from './components/HourlyForecast/HourlyForecast.js';
-import Suggestions from './components/Suggestions/Suggestions';
+import Suggestions from './components/SuggestedItems/SuggestedItems';
 import SongRecommendation from './components/SongRecommendation/SongRecommendation';
 
 const App = () => {
@@ -136,6 +136,7 @@ const App = () => {
           setError(error);
         }
       );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   if (error) {

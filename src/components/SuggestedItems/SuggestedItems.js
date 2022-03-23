@@ -6,7 +6,7 @@ import './suggestions.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const Suggestions = ({ weather }) => {
+const SuggestedItems = ({ weather }) => {
   // fetching the items related to the weather condition
   let items = data[weather.toLowerCase()];
 
@@ -39,4 +39,4 @@ const Suggestions = ({ weather }) => {
   );
 };
 
-export default Suggestions;
+export default SuggestedItems;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Carousel from 'react-multi-carousel';
