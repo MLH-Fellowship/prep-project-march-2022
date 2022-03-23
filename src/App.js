@@ -161,11 +161,6 @@ function App() {
           <h2>Enter a city below 👇</h2>
 
           <SearchBox setCity={setCity} />
-          <input
-            type="text"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-          />
 
           <div className="Results">
             {!isLoaded && <h2>Loading...</h2>}
