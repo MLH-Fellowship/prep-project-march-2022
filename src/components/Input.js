@@ -21,6 +21,6 @@ export default function Input({city, setCity, setLatLng, results, clickedLast, s
                 value={clickedLast ? results.name : city}
                 onChange={event => setCity(event.target.value)} />   
             </div>
-                )
+    )
                   
    }
