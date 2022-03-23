@@ -10,8 +10,8 @@ You'll be using React initially to build this. If you're new to React, check out
 
 ***
 ### Creating API key for Food Recommendations:
-[Spoonacular API](https://spoonacular.com/food-api/docs) can be used for food recommendations
-Steps:
+[Spoonacular API](https://spoonacular.com/food-api/docs) can be used for food recommendations </br>
+
 - Click on 'Start Now' button to go to the signup page.
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/73184612/159624513-7ef7f754-e2be-46c6-9a14-6d4bc93d9821.png">
 
