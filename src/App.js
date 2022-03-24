@@ -160,7 +160,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
 
-          <SearchBox setCity={setCity} />
+          {/* <SearchBox setCity={setCity} /> */}
 
           <div className="Results">
             {!isLoaded && <h2>Loading...</h2>}
@@ -200,13 +200,13 @@ function App() {
 
           {fooditems && <FoodCarousel items={fooditems} />}
         </div>
-        <div>
+        {/* <div>
           {isLoaded && results && (
             <>
               <SongRecommendation options={results} />{" "}
             </>
           )}
-        </div>
+        </div> */}
       </>
     );
   }
