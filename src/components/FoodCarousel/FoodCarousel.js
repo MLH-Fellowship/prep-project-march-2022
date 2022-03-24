@@ -1,5 +1,5 @@
-import react, { useEffect, useState, useRef } from "react";
-import FoodItem from "./foodItem";
+import { useEffect, useState, useRef } from 'react';
+import FoodItem from './foodItem';
 
 const delay = 2500;
 
@@ -26,17 +26,16 @@ export default function FoodCarousel(props) {
     return () => {
       resetTimeout();
     };
-  }, [index]);
+  }, [index, props.items.length]);
 
   return (
-    <div className="slideshow">
+    <div className='slideshow'>
       <div
-        className="slideshowSlider"
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-      >
+        className='slideshowSlider'
+        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
         {props.items.map((fooditem, index) => {
           return (
-            <div className="slide" key={index}>
+            <div className='slide' key={index}>
               <FoodItem
                 key={fooditem.id}
                 name={fooditem.title}
@@ -48,16 +47,15 @@ export default function FoodCarousel(props) {
         })}
       </div>
 
-      <div className="slideshowDots">
+      <div className='slideshowDots'>
         {props.items.map((_, idx) => {
           return (
             <div
               key={idx}
-              className={`slideshowDot${index === idx ? " active" : ""}`}
+              className={`slideshowDot${index === idx ? ' active' : ''}`}
               onClick={() => {
                 setIndex(idx);
-              }}
-            ></div>
+              }}></div>
           );
         })}
       </div>
