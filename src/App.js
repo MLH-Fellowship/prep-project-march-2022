@@ -3,6 +3,7 @@ import './App.css';
 import logo from './mlh-prep.png';
 import FoodCarousel from './components/FoodCarousel/FoodCarousel';
 import SearchBox from './components/SearchBox/SearchBox';
+import Language from './components/multi-language/languagesupport'
 import HourlyForecast from './components/HourlyForecast/HourlyForecast.js';
 import Suggestions from './components/SuggestedItems/SuggestedItems';
 import SongRecommendation from './components/SongRecommendation/SongRecommendation';
@@ -147,7 +148,7 @@ const App = () => {
         <img className='logo' src={logo} alt='MLH Prep Logo'></img>
         <div>
           <h2>Enter a city below 👇</h2>
-
+          <Language/> 
           <SearchBox setCity={setCity} />
 
           <div className='Results'>
