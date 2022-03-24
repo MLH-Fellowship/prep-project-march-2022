@@ -3,7 +3,7 @@ import React from "react"
 export default function Input({city, setCity, setLatLng, results, clickedLast, setClickedLast, setIsLoaded, error}) {
     
     //clickedLast sets the value of the input to the results.name returned from weather API  
-    //clickedLast is set to true in the Map component
+    //clickedLast is set to true on click in the Map component
     
     //useEffect updates state only when the dependency is defined
 
