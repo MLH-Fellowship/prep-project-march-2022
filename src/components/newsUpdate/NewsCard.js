@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './../../styles/NewsCard.css'
-import Dataset from 'data.js'
 
 const NewsCard = ({ info }) => {
-    console.log(info)
     const [date, setDate] = useState('')
 
     const getDate = () => {
         let newDate = Intl.DateTimeFormat().format(
             new Date(info.publishedAt.toString())
         )
-        console.log(newDate)
         setDate(newDate)
     }
 
