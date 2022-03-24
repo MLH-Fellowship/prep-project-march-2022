@@ -7,14 +7,14 @@ const NewsUpdate = ({ city, iso }) => {
 
     useEffect(() => {
         const fetchNews = async () => {
-            let url = `https://newsapi.org/v2/top-headlines?country=${iso.toLowerCase()}&apiKey=3228cad84a9a4d88bea5ceb3914b1923`
+            let url = `https://newsapi.org/v2/top-headlines?country=${iso.toLowerCase()}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
             let req = new Request(url)
             let response = await fetch(req)
             let data = await response.json()
             setNews(data.articles)
         }
         fetchNews()
-    }, [])
+    }, [city])
 
     const renderNews = () => (
         news.map(info => (
