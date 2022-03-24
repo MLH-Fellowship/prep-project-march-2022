@@ -187,15 +187,6 @@ function currentweather(lat, lon){
             
           </>}
         </div>
-
-
-        {/* <div>
-        {isLoaded && results && <>
-          <WeatherAlerts weather={results.weather[0].main}/>
-            </>}
-        </div> */}
-
-
         {isLoaded && results &&
         <Suggestions
           weather={results.weather[0].main}
@@ -203,7 +194,6 @@ function currentweather(lat, lon){
         }
         </div>
       <div>
-        {/* <HourlyForecast results = {results} /> */}
         <HourlyForecast results = {results} lat = {lat} lon = {lon}  city={city} key ={1}/>
       </div>
         <div>
