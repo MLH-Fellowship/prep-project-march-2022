@@ -1,10 +1,11 @@
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import "./HourlyForecast.css";
+/* eslint-disable no-unused-vars */
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import './HourlyForecast.css';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const responsive = {
   superLargeDesktop: {
@@ -25,68 +26,63 @@ const responsive = {
   },
 };
 
-const HourlyForecast = ({ results, lat, lon, city }) => {
+const HourlyForecast = ({ results, lat, lon, city, key }) => {
   const [data, setData] = useState(results);
   const [time, setTime] = useState(0);
   useEffect(
     () => {
       fetch(
-        "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-          lat +
-          "&lon=" +
-          lon +
-          "&exclude=daily&appid=" +
-          process.env.REACT_APP_APIKEY
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=daily&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       )
         .then((res) => res.json())
         .then((result) => {
-          if (result.cod !== "200") {
+          if (result.cod !== '200') {
             setData(result);
             const dt = result.hourly[0].dt;
             var days = [
-              "Sunday",
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
+              'Sunday',
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
             ];
             var day = new Date(dt * 1000);
-            setTime(day.getUTCHours() + " UTC");
+            setTime(day.getUTCHours() + ' UTC');
           } else {
-            console.log("Something is worng Error");
+            console.log('Something is worng Error');
           }
         })
         .catch((err) => console.log(err));
     },
-    [city],
+    [city, lat, lon],
     []
   );
 
   const days = {
-    0: "Sun",
-    1: "Mon",
-    2: "Tue",
-    3: "Wed",
-    4: "Thu",
-    5: "Fri",
-    6: "Sat",
+    0: 'Sun',
+    1: 'Mon',
+    2: 'Tue',
+    3: 'Wed',
+    4: 'Thu',
+    5: 'Fri',
+    6: 'Sat',
   };
   const keys = Object.values(days);
-  const no = "10d";
+  const no = '10d';
   return (
     <div>
-      <div className="component">
+      <div className='component'>
         <Carousel responsive={responsive}>
           {keys.map((item, index) => (
             <CardContent key={index}>
-              <Typography variant="h5" component="div">
+              <Typography variant='h5' component='div'>
                 {new Date(
                   data == null ? 0 : data.hourly[index].dt * 1000
-                ).getUTCHours() + " UTC"}
+                ).getUTCHours() + ' UTC'}
               </Typography>
-              <Typography color="secondary">
+              <Typography color='secondary'>
                 {
                   keys[
                     new Date(
@@ -95,13 +91,14 @@ const HourlyForecast = ({ results, lat, lon, city }) => {
                   ]
                 }
               </Typography>
-              <Typography variant="h4">
+              <Typography variant='h4'>
                 {data == null ? 0 : data.hourly[index].feels_like.toFixed(2)}° K
               </Typography>
               <img
                 src={`http://openweathermap.org/img/wn/${
                   data == null ? 0 : data.hourly[index].weather[0].icon
                 }@2x.png`}
+                alt='weather icon'
               />
             </CardContent>
           ))}

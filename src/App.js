@@ -1,28 +1,24 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
-import FoodCarousel from "./FoodCarousel";
-import SearchBox from "./components/SearchBox";
-import HourlyForecast from "./components/HourlyForecast.js";
-import Suggestions from "./components/suggestions/suggestions";
+import FoodCarousel from "./components/FoodCarousel/FoodCarousel";
+import SearchBox from "./components/SearchBox/SearchBox";
+import HourlyForecast from "./components/HourlyForecast/HourlyForecast.js";
+import Suggestions from "./components/SuggestedItems/SuggestedItems";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
-import Background from "./Background";
+import Background from "./components/Background";
 
-function App() {
+const App = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  const [city, setCity] = useState("Globe");
+  const [city, setCity] = useState("New York");
   const [results, setResults] = useState(null);
   const [lat, setLat] = useState(0.0);
   const [lon, setLon] = useState(0.0);
-
   const [fooditems, setFooditems] = useState(null);
 
   const change = (response) => {
-    let endpoint1 =
-      "https://api.spoonacular.com/recipes/complexSearch/?apiKey=" +
-      process.env.REACT_APP_FOODAPIKEY;
+    let endpoint1 = `https://api.spoonacular.com/recipes/complexSearch/?apiKey=${process.env.REACT_APP_FOOD_API_KEY}`;
     let endpoint2 = endpoint1;
     let endpoint3 = endpoint1;
     if (response.weather[0].main === "Rain") {
@@ -72,8 +68,8 @@ function App() {
     }
 
     function showPosition(position) {
-      var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
       currentweather(lat, lon);
     }
     function showError(error) {
@@ -90,20 +86,16 @@ function App() {
         case error.UNKNOWN_ERROR:
           window.alert("An unknown error occurred.");
           break;
+        default:
+          window.alert("");
       }
     }
 
-    function currentweather(lat, lon) {
+    const currentweather = (lat, lon) => {
       fetch(
-        "https://api.openweathermap.org/data/2.5/weather?lat=" +
-          lat +
-          "&lon=" +
-          lon +
-          "&appid=" +
-          process.env.REACT_APP_APIKEY +
-          "&units=metric"
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
       )
-        .then((res) => res.json())
+        .then((result) => result.json())
         .then(
           (result) => {
             if (result["cod"] !== 200) {
@@ -115,22 +107,18 @@ function App() {
             }
           },
           (error) => {
-            setIsLoaded(true);
+            setIsLoaded(false);
             setError(error);
           }
         );
-    }
+    };
   }, []);
 
   useEffect(() => {
     fetch(
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
-        city +
-        "&units=metric" +
-        "&appid=" +
-        process.env.REACT_APP_APIKEY
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
     )
-      .then((res) => res.json())
+      .then((result) => result.json())
       .then(
         (result) => {
           if (result["cod"] !== 200) {
@@ -149,6 +137,7 @@ function App() {
           setError(error);
         }
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   if (error) {
@@ -160,7 +149,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
 
-          {/* <SearchBox setCity={setCity} /> */}
+          <SearchBox setCity={setCity} />
 
           <div className="Results">
             {!isLoaded && <h2>Loading...</h2>}
@@ -177,39 +166,29 @@ function App() {
               </>
             )}
           </div>
-          <div>
-            <HourlyForecast
-              results={results}
-              lat={lat}
-              lon={lon}
-              city={city}
-              key={1}
-            />
-          </div>
-          <div>
-            {isLoaded && results && (
-              <Suggestions weather={results.weather[0].main} />
-            )}
-          </div>
+          {isLoaded && results && (
+            <Suggestions weather={results.weather[0].main} />
+          )}
         </div>
-
+        <div>
+          <HourlyForecast results={results} lat={lat} lon={lon} city={city} />
+        </div>
+        <div>
+          {isLoaded && results && (
+            <>
+              <SongRecommendation options={results} />
+            </>
+          )}
+        </div>
         <div className="food-recommendations">
           <h2 className="food-recommendations-title">
             Hungry? Here's some food you may like 😋
           </h2>
-
           {fooditems && <FoodCarousel items={fooditems} />}
         </div>
-        {/* <div>
-          {isLoaded && results && (
-            <>
-              <SongRecommendation options={results} />{" "}
-            </>
-          )}
-        </div> */}
       </>
     );
   }
-}
+};
 
 export default App;
