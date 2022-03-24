@@ -47,21 +47,10 @@ input {
   padding: 0;
 }
 
-#map {
+.map-container {
   height: 400px;
   width: 88%;
   margin: auto;
   object-fit: contain;
-}
-
-.loading-map {
-  height: 400px;
-  width: 100%;
-  background-color: white;
-  border-radius: 18px;
-  color: black;
-}
-
-.map-google {
   border-radius: 18px;
 }
