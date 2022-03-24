@@ -23,6 +23,6 @@ You'll be using React initially to build this. If you're new to React, check out
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/73184612/159625250-9894be85-d265-4445-8882-c953d59225ac.png">
 
 - Copy this API key. Create a .env file in the root of your local repository, and add the API key inside it as: <br />
-REACT_APP_FOODAPIKEY=<your_key>
+REACT_APP_FOOD_API_KEY=<your_key>
 
 - Restart the terminal and run the app.
