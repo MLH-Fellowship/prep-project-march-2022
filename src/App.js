@@ -1,12 +1,10 @@
 import { useEffect, useState, createContext } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
-import Mymap from './components/Mymap'
+import MyMap from './components/MyMap'
 import Results from './components/Results'
 import Input from './components/Input'
-//import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
-//import Marker from './components/Marker'
 
 
 function App() {
@@ -15,11 +13,10 @@ function App() {
   const [city, setCity] = useState("New York")
   const [results, setResults] = useState(null);
   const [latLng, setLatLng] = useState([40.71427, -74.00597])
-  const [clickedLast, setClickedLast] = useState(false)
-
-  //console.log(city)
-
-  
+  const [clickedLast, setClickedLast] = useState(false) // gives us conditional rendering of our Input value:
+                                                              //to reflect the state of Results when the map is clicked 
+                                                              //and 
+                                                              //to setCity when user changes the input
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latLng[0]}&lon=${latLng[1]}&appid=${process.env.REACT_APP_APIKEY}`)
@@ -82,7 +79,7 @@ function App() {
           <>
         
           <div id="map">
-        <Mymap 
+        <MyMap 
                setCity={setCity}
                city={city}
                setError={setError}
