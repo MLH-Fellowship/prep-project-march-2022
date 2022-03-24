@@ -1,4 +1,6 @@
 import React from "react"
+// import SearchBox from ".components/SearchBox/SearchBox"
+// Uncomment to implement Autocorrect feature and replace <input> with <SearchBox /> below
 
 export default function Input({city, setCity, setLatLng, results, clickedLast, setClickedLast}) {
     
@@ -22,6 +24,7 @@ export default function Input({city, setCity, setLatLng, results, clickedLast, s
         return (
             <div className="input">
             <h2>Enter a city below 👇</h2>
+            {/*<SearchBox setCity= {setCity}/> */}
             <input
                 id="city"
                 type="search"
