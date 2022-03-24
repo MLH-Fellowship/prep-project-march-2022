@@ -1,12 +1,12 @@
-import react from "react";
-import clouds from "./assets/clouds.mp4";
-import clearsky from "./assets/clearsky.mp4";
-import rainlightning from "./assets/rain-lightning.mp4";
-import sunny from "./assets/sunny.mov";
-import thunderstorm from "./assets/thunderstorm.mp4";
-import snow from "./assets/snow.mov";
-import drizzle from "./assets/drizzle.mov";
-import fog from "./assets/fog.mp4";
+import clouds from "../assets/backgrounds/clouds.mp4";
+import clearsky from "../assets/backgrounds/clearsky.mp4";
+import rainlightning from "../assets/backgrounds/rain-lightning.mp4";
+import sunny from "../assets/backgrounds/sunny.mp4";
+import thunderstorm from "../assets/backgrounds/thunderstorm.mp4";
+import snow from "../assets/backgrounds/snow.mp4";
+import drizzle from "../assets/backgrounds/drizzle.mov";
+import dust from "../assets/backgrounds/dust.mp4";
+import haze from "../assets/backgrounds/haze.mp4";
 
 const Background = (props) => {
   const weather = props.currweather;
@@ -54,27 +54,28 @@ const Background = (props) => {
     );
   } else if (
     weather === "Mist" ||
-    weather === "Smoke" ||
+    weather === "Tornado" ||
     weather === "Haze" ||
     weather === "Fog"
   ) {
-    console.log("haze");
     return (
       <video autoPlay loop muted id="video">
-        <source src={fog} />
+        <source src={haze} />
       </video>
     );
-  }
-  //    else if (
-  //     weather === "Dust" ||
-  //     weather === "Sand" ||
-  //     weather === "Ash" ||
-  //     weather === "Squall" ||
-  //     weather === "Tornado"
-  //   ) {
-  //     return <DustBg children={children} />;
-  //   }
-  else {
+  } else if (
+    weather === "Dust" ||
+    weather === "Sand" ||
+    weather === "Ash" ||
+    weather === "Squall" ||
+    weather === "Smoke"
+  ) {
+    return (
+      <video autoPlay loop muted id="video">
+        <source src={dust} />
+      </video>
+    );
+  } else {
     console.log("inside else");
     return (
       <video autoPlay loop muted id="video">
