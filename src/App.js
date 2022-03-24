@@ -1,12 +1,12 @@
 import { useEffect, useState, createContext } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
-//import Map from './components/Map'
+import Mymap from './components/Mymap'
 import Results from './components/Results'
 import Input from './components/Input'
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import Mymap from "./components/Mymap";
-import Marker from './components/Marker'
+//import { Wrapper, Status } from "@googlemaps/react-wrapper";
+
+//import Marker from './components/Marker'
 
 
 function App() {
@@ -18,7 +18,6 @@ function App() {
   const [clickedLast, setClickedLast] = useState(false)
 
   //console.log(city)
-  const MapContext = createContext({lat: latLng[0], lng: latLng[1]}) 
 
   
 
@@ -45,9 +44,9 @@ function App() {
   
 
   const handleClick = (e) => {
-    setClickedLast(true)
-    setLatLng([e.latLng.lat(), e.latLng.lng()])
-    console.log(e)
+    //setClickedLast(true)
+    //setLatLng([e.lngLat.lng, e.lngLat.lat])
+    //console.log(e)
   }
 
  
@@ -79,35 +78,23 @@ function App() {
           isLoaded={isLoaded}
           results={results}
           error={error}
-        />
+          />
           <>
-          <div id='map'>
+        
+          <div id="map">
+        <Mymap 
+          setLatLng={setLatLng}
+          latLng={latLng}
+          handleClick={handleClick}
+         />  
+          </div>
+          
             
-          <Wrapper apiKey={process.env.REACT_APP_GOOGLEAPIKEY}>
-            <MapContext.Consumer>
-              {value => (
-                <Mymap  
-                  zoom={6} 
-                  center = {{...value}}
-                  onClick={handleClick}
-                >
-                  <Marker position={{...value}}/>
-                </Mymap>
-              )}
-            </MapContext.Consumer>  
+
                 
-          </Wrapper>
-            
-        </div>
+              
           </>
-        {/* <div id='map'>
-            
-            <Map 
-            googleMapURL= {`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLEAPIKEY}&v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `400px`}} />}
-            mapElement={<div className={`map-google`} style={{ height: `100%`}} />}/>
-        </div> */}
+        
       </div>
     </>
   )

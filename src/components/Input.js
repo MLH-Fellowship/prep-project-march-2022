@@ -9,7 +9,7 @@ export default function Input({city, setCity, setLatLng, results, clickedLast, s
                 setLatLng([result[0].lat, result[0].lon])
                 setClickedLast(false)
             })  
-            }, [city]) 
+            }, [setCity]) 
             
             
     return (
@@ -17,7 +17,7 @@ export default function Input({city, setCity, setLatLng, results, clickedLast, s
             <h2>Enter a city below 👇</h2>
             <input
                 id="city"
-                type="text"
+                type="search"
                 value={clickedLast ? results.name : city}
                 onChange={event => setCity(event.target.value)} />   
             </div>
