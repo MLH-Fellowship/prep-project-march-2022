@@ -41,13 +41,7 @@ function App() {
 
   }, [latLng])
 
-  
 
-  const handleClick = (e) => {
-    //setClickedLast(true)
-    //setLatLng([e.lngLat.lng, e.lngLat.lat])
-    //console.log(e)
-  }
 
  
 
@@ -62,30 +56,45 @@ function App() {
           setIsLoaded={setIsLoaded}
           setResults={setResults}
           setLatLng={setLatLng}
-          setClickedLast={setClickedLast}
-          clickedLast={clickedLast}
           latLng={latLng}
           isLoaded={isLoaded}
           results={results}
           error={error}
+          clickedLast={clickedLast}
+          setClickedLast={setClickedLast}
+
           
         />
         <Results 
-          setError={setError}
-          setIsLoaded={setIsLoaded}
-          setResults={setResults}
-          latLng={latLng}
-          isLoaded={isLoaded}
-          results={results}
-          error={error}
+               setCity={setCity}
+               city={city}
+               setError={setError}
+               setIsLoaded={setIsLoaded}
+               setResults={setResults}
+               setLatLng={setLatLng}
+               latLng={latLng}
+               isLoaded={isLoaded}
+               results={results}
+               error={error}
+               clickedLast={clickedLast}
+               setClickedLast={setClickedLast}
           />
           <>
         
           <div id="map">
         <Mymap 
-          setLatLng={setLatLng}
-          latLng={latLng}
-          handleClick={handleClick}
+               setCity={setCity}
+               city={city}
+               setError={setError}
+               setIsLoaded={setIsLoaded}
+               setResults={setResults}
+               setLatLng={setLatLng}
+               latLng={latLng}
+               isLoaded={isLoaded}
+               results={results}
+               error={error}
+               clickedLast={clickedLast}
+               setClickedLast={setClickedLast}
          />  
           </div>
           

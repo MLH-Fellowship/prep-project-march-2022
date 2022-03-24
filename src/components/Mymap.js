@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 
 
-function Mymap({latLng, setLatLng}) {
+function Mymap({latLng, setLatLng, setCity, results, setResults, setClickedLast}) {
   const mapContainer = React.useRef(null);
   const map = React.useRef(null);
   const marker=React.useRef(null);
@@ -18,7 +18,10 @@ function Mymap({latLng, setLatLng}) {
           center: [latLng[1], latLng[0]], // starting position [lng, lat]
           zoom: 9 // starting zoom
           })
-          .on('click', (e) => setLatLng([{...e.lngLat}.lat, {...e.lngLat}.lng]))
+          .on('click', (e) => {
+            setLatLng([{...e.lngLat}.lat, {...e.lngLat}.lng])
+            setClickedLast(true)
+          })
         
           marker.current = new mapboxgl.Marker()
             .setLngLat([latLng[1], latLng[0]])
