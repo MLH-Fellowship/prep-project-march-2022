@@ -18,6 +18,7 @@ const soundMap = {
 
 function WeatherSounds({ weatherName }) {
   let isSoundOn = false;
+  
   const weatherSound = soundMap[weatherName] ?? rain;
  
   const sound = weatherSound
