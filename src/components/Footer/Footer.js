@@ -9,7 +9,7 @@ const Footer = () => {
         <a href="https://www.youtube.com/c/Majorleaguehacking" class="fa fa-youtube"></a>
         <a href="https://www.instagram.com/mlhacks/" class="fa fa-instagram"></a>
         <div className="text-center">
-            <p class="copyright">MLH Prep © 2021</p>
+            <p class="copyright">MLH Prep © 2022</p>
         </div>
     </div>
   );
