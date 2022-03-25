@@ -6,12 +6,12 @@ const SuggestionCard = ({ item }) => {
     '.json');
 
   return (
-    <div className='card'>
-      <div className='card-img'>
+    <div className='suggestion-card'>
+      <div className='suggestion-card-img'>
         <LottieControl animationData={file} />
       </div>
 
-      <h2 className='primary-text'>
+      <h2 className='suggestion-primary-text'>
         {' '}
         {item} <br />
       </h2>

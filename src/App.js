@@ -7,6 +7,7 @@ import HourlyForecast from "./components/HourlyForecast/HourlyForecast.js";
 import Suggestions from "./components/SuggestedItems/SuggestedItems";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import Background from "./components/Background";
+import WeatherSounds from "./components/WeatherSound/WeatherSound";
 
 const App = () => {
   const [error, setError] = useState(null);
@@ -164,6 +165,7 @@ const App = () => {
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
         <div>
+          
           <h2>Enter a city below 👇</h2>
 
           <SearchBox setCity={setCity} />
@@ -172,7 +174,11 @@ const App = () => {
             {!isLoaded && <h2>Loading...</h2>}
             {isLoaded && results && (
               <>
+
+              <WeatherSounds weatherName={results.weather[0].main} />
+
                 <Background currweather={results.weather[0].main} />
+
                 <h3>{results.weather[0].main}</h3>
                 <p>Feels like {feels_like}</p>
                 <i>
