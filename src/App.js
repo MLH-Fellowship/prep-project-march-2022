@@ -15,8 +15,24 @@ const App = () => {
   const [results, setResults] = useState(null);
   const [lat, setLat] = useState(0.0);
   const [lon, setLon] = useState(0.0);
+  const [disp, setDisp] = useState("Cel");
+  const [feels_like,setFeelslike] = useState(null);
   const [fooditems, setFooditems] = useState(null);
-
+  
+   const handleChange = () => {
+  if(disp==="Cel")
+  {
+  	setDisp("Fah");
+  	setFeelslike(((results.main.feels_like*1.8)+32)+" \xB0 F");
+  }
+  else
+  {
+  	setDisp("Cel");
+  	setFeelslike(results.main.feels_like+" \xB0 C");
+  }
+  }
+  
+  
   const change = (response) => {
     let endpoint1 = `https://api.spoonacular.com/recipes/complexSearch/?apiKey=${process.env.REACT_APP_FOOD_API_KEY}`;
     let endpoint2 = endpoint1;
@@ -129,6 +145,7 @@ const App = () => {
             setResults(result);
             setLat(result.coord.lat);
             setLon(result.coord.lon);
+            setFeelslike(result.main.feels_like+" \xB0 C");
             change(result);
           }
         },
@@ -157,12 +174,17 @@ const App = () => {
               <>
                 <Background currweather={results.weather[0].main} />
                 <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
+                <p>Feels like {feels_like}</p>
                 <i>
                   <p>
                     {results.name}, {results.sys.country}
                   </p>
                 </i>
+                 <p>Toggle temperature display</p>
+                 <label class="switch">
+				  <input type="checkbox" onChange={handleChange}/>
+				  <span class="slider round"></span>
+				</label>
               </>
             )}
           </div>
