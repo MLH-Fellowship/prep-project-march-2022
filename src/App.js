@@ -7,6 +7,7 @@ import HourlyForecast from "./components/HourlyForecast/HourlyForecast.js";
 import Suggestions from "./components/SuggestedItems/SuggestedItems";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import Background from "./components/Background";
+import Footer from "./components/Footer/Footer"
 
 const App = () => {
   const [error, setError] = useState(null);
@@ -207,6 +208,9 @@ const App = () => {
             Hungry? Here's some food you may like 😋
           </h2>
           {fooditems && <FoodCarousel items={fooditems} />}
+        </div>
+        <div>
+          <Footer />
         </div>
       </>
     );

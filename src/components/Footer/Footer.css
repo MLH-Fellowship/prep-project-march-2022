@@ -1,0 +1,56 @@
+.MLHFooter {
+    padding: 20px;
+    border-bottom: 2px solid #888;
+    background-color: #133667;
+    margin-bottom: 0%;
+    margin-top: 10%;
+}
+  
+.text-center {
+    align-content: center;
+}
+
+.MLHFooter .fa {
+    padding: 15px;
+    font-size: 18px;
+    width: 30px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 10px 15px 10px;
+    border-radius: 50%;
+}
+  
+.MLHFooter .fa:hover {
+    opacity: 0.7;
+}
+  
+
+.MLHFooter .fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.MLHFooter .fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
+
+.MLHFooter .fa-linkedin {
+    background: #007bb5;
+    color: white;
+}
+
+.MLHFooter .fa-youtube {
+    background: #bb0000;
+    color: white;
+}
+
+.MLHFooter .fa-instagram {
+    background: #125688;
+    color: white;
+}
+
+.MLHFooter .copyright{
+    font-size:16px;
+    color:#aaa;
+}
