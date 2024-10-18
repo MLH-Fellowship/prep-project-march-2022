@@ -107,3 +107,18 @@ The API key created dialog displays your newly created API key.
 - Now go to [billing Section](https://console.cloud.google.com/billing) and link a billing account, do not worry it is free of cost.
 
 - Restart the terminal and run the app.
+
+
+### Creating API key to enable Spotify Feature for weather:
+
+- Go to the [spotify](https://www.spotify.com/us/) website.
+
+- Click on [developers](https://developer.spotify.com/)  in the footer
+
+- Click on [dashboard](https://developer.spotify.com/dashboard/applications)  in the header.
+
+- Click on create a new app and fill in your apps details
+
+- Once created you'll receive a SPOTIFY CLIENT ID and SPOTIFY_SECRET
+
+- Add these to your .env to start making requests and remember to restart the server and run the app
